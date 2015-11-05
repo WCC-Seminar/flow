@@ -66,12 +66,42 @@ class RGB {
 
 // }}}
 
+// base.hs {{{
+class Dot {
+  public loc:Point;
+  public vel:Point;
+  public col:RGB;
+  public dir:number;
+  private alpha:number = 0.5;
+  
+  constructor (l:Point, v:Point, c:RGB, d:number){
+    this.loc=l; this.vel=v; this.col=c; this.dir=d;
+  }
+
+  public drawOn(c: HTMLCanvasElement) : void {
+    var ctx = c.getContext('2d');
+    // FIXME
+    ctx.fillStyle = "rgba(" +
+      this.col.r.toString() + ", " +
+      this.col.g.toString() + ", " +
+      this.col.b.toString() + ", " +
+      this.alpha.toString() + ")";
+    ctx.arc(this.loc.x, this.loc.y, this.dir, 0, 2*Math.PI);
+    ctx.fill();
+  }
+}
+
+// }}}
+
 function main() : void {
   console.log('hi');
   var n : Point = new Point(4,5);
   console.log(n);
   console.log(vAdd(n,n));
   console.log(sMul(4.2,n));
+  var c = <HTMLCanvasElement>document.getElementById('world');
+  var p : Dot = new Dot (new Point(50,50), new Point(0,0), new RGB(230,34,230),40);
+  p.drawOn(c);
 }
 
 window.addEventListener(
