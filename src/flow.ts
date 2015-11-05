@@ -15,6 +15,22 @@ function sMul(a:number, v:Vector) : Vector {
   return (new Vector(a*v.x, a*v.y));
 }
 
+// returns (dist (v0,v1))^2.
+function distSq(v0:Vector, v1:Vector): number {
+  return (Math.pow(v0.x-v1.x, 2) + Math.pow(v0.y-v1.y, 2));
+}
+
+// normalize a vector so that its norm is equal or less than d.
+function fitIn(d:number, v:Vector) : Vector {
+  var s = v.x*v.x + v.y*v.y;
+  if (s <= d) {
+    return v;
+  }
+  else {
+    return sMul((Math.sqrt(d/s)), v);
+  }
+}
+
 
 // }}}
 
@@ -97,6 +113,28 @@ class Dot {
     // TODO
     return new Dot (newLoc, this.vel, this.col, this.dia);
   }
+  
+  public moveInplace(t:number) : void {
+    this.loc = vAdd(this.loc, sMul(t,this.vel));
+  }
+  
+  public accelInplace(maxSpeed:number, dv: Vector) : void {
+    this.vel = fitIn(maxSpeed, vAdd(dv, this.vel));
+  }
+  
+  public decelInplace(ratio: number): void {
+    this.vel = sMul(ratio, this.vel);
+  }
+
+  public inside(w:number, h:number) : boolean {
+    var x = this.loc.x; var y = this.loc.y;
+    return (0 <= x && x <= w && 0 <= y && y <= h);
+  }
+}
+
+// is two dots colliding?
+function collides (d0: Dot, d1:Dot) : boolean {
+  return (Math.pow((d0.dia + d1.dia),2) <= distSq(d0.loc, d1.loc));
 }
 
 // }}}
