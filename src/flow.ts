@@ -1,5 +1,5 @@
 // helpeer.hs {{{
-class Point {
+class Vector {
   public x:number; y:number;
   constructor(x:number, y:number){
     this.x = x;
@@ -7,13 +7,15 @@ class Point {
   }
 }
 
-function vAdd(v0:Point, v1:Point) : Point {
-  return (new Point(v0.x + v1.x, v0.y + v1.y));
+function vAdd(v0:Vector, v1:Vector) : Vector {
+  return (new Vector(v0.x + v1.x, v0.y + v1.y));
 }
 
-function sMul(a:number, v:Point) : Point {
-  return (new Point(a*v.x, a*v.y));
+function sMul(a:number, v:Vector) : Vector {
+  return (new Vector(a*v.x, a*v.y));
 }
+
+
 // }}}
 
 // colour.hs {{{
@@ -68,13 +70,13 @@ class RGB {
 
 // base.hs {{{
 class Dot {
-  public loc:Point;
-  public vel:Point;
+  public loc:Vector;
+  public vel:Vector;
   public col:RGB;
   public dia:number;
   private alpha:number = 0.5;
   
-  constructor (l:Point, v:Point, c:RGB, d:number){
+  constructor (l:Vector, v:Vector, c:RGB, d:number){
     this.loc=l; this.vel=v; this.col=c; this.dia=d;
   }
 
@@ -101,12 +103,12 @@ class Dot {
 
 function main() : void {
   console.log('hi');
-  var n : Point = new Point(4,5);
+  var n : Vector = new Vector(4,5);
   console.log(n);
   console.log(vAdd(n,n));
   console.log(sMul(4.2,n));
   var c = <HTMLCanvasElement>document.getElementById('world');
-  var p : Dot = new Dot (new Point(50,50), new Point(0,0), new RGB(230,34,230),40);
+  var p : Dot = new Dot (new Vector(50,50), new Vector(0,0), new RGB(230,34,230),40);
   p.drawOn(c);
 }
 
