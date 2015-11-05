@@ -71,11 +71,11 @@ class Dot {
   public loc:Point;
   public vel:Point;
   public col:RGB;
-  public dir:number;
+  public dia:number;
   private alpha:number = 0.5;
   
   constructor (l:Point, v:Point, c:RGB, d:number){
-    this.loc=l; this.vel=v; this.col=c; this.dir=d;
+    this.loc=l; this.vel=v; this.col=c; this.dia=d;
   }
 
   public drawOn(c: HTMLCanvasElement) : void {
@@ -86,8 +86,14 @@ class Dot {
       this.col.g.toString() + ", " +
       this.col.b.toString() + ", " +
       this.alpha.toString() + ")";
-    ctx.arc(this.loc.x, this.loc.y, this.dir, 0, 2*Math.PI);
+    ctx.arc(this.loc.x, this.loc.y, this.dia, 0, 2*Math.PI);
     ctx.fill();
+  }
+  
+  public move(t:number) : Dot {
+    var newLoc = vAdd(this.loc, sMul(t,this.vel));
+    // TODO
+    return new Dot (newLoc, this.vel, this.col, this.dia);
   }
 }
 
