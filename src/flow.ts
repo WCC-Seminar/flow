@@ -236,7 +236,7 @@ function keyConfig(keyCode:number) : Vector {
 function fromPressed(pressed: boolean[]) : Vector {
   return (
     pressed
-      .map((pr,i) => {return (keyConfig(i)); })
+      .map((pr,i) => { return (pr ? (keyConfig(i)): new Vector(0,0)); })
       .reduce(((acc, v) => {return vAdd(acc,v)}), new Vector(0,0))
       );
 }
@@ -308,7 +308,7 @@ function main() : void {
     
     // accelerate / decelerate according to the user interaction. {{{
     var a = fromPressed(pressed);
-    if (a.x !== 0 && a.y !== 0) {
+    if (a.x !== 0 || a.y !== 0) {
       // in place .. wierd...
       player.accelInplace(maxPlayerSpeed, sMul((t/100), a));
       player.moveInplace(t/100);
