@@ -101,6 +101,7 @@ class Dot {
   public drawOn(c: HTMLCanvasElement) : void {
     var ctx = c.getContext('2d');
     // FIXME
+    ctx.beginPath();
     ctx.fillStyle = "rgba(" +
       this.col.r.toString() + ", " +
       this.col.g.toString() + ", " +
