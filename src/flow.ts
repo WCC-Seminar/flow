@@ -243,12 +243,89 @@ function fromPressed(pressed: boolean[]) : Vector {
 
 // }}}
 
+// flow.hs {{{
+function clearCanv(c : HTMLCanvasElement) : void {
+  c.getContext('2d').clearRect(0,0, c.width, c.height);
+}
+
+var normalColor : RGBA = new RGBA (0, 250, 100, 0.7);
+var hitColor : RGBA = new RGBA(230,150,100,0.7);
+
+var player : Dot = new Dot (
+  new Vector(250, 450),
+  new Vector (0,0),
+  normalColor,
+  5
+);
+
+var maxPlayerSpeed : number = 30;
+
+function handleCollision(pl : Dot, dots: Dot[]) : void{
+  // if any of the dot collides ..
+  for (var i=0; i<dots.length; i++){
+    if (collides(pl, dots[i])) {
+      pl.col = hitColor;
+      return;
+    }
+  }
+  pl.col = normalColor;
+}
+
+// add another dot if there are less than required.
+// (I took add-one-dot-at-a-time strategy here to avoid many dots rushing in.)
+function replenishDots(n:number, ds:Dot[]) : void {
+  if (ds.length < n) {
+    ds.push(spawn(updateSpawnConfig));
+  }
+}
+// }}}
+
 function main() : void {
+  // prepare {{{
+  // the canvas we're using
   var c = <HTMLCanvasElement>document.getElementById('world');
   var dots = spawnN(initSpawnConfig, 50);
-  for (var i=0; i<dots.length; i++){
-    dots[i].drawOn(c);
+  var pressed = [];
+  addKeyHandler(pressed);
+  // }}}
+  // mainLoop {{{
+  function mainLoop(t0, t1){
+    // time from last step
+    var t = t1-t0;
+    clearCanv(c);
+    player.drawOn(c);
+    
+    // draw each dot (forEach?)
+    dots.map( d => {d.drawOn(c);})
+    
+    // remove dots that are outside of canvas.
+    // need to rethink here if we implement more complex algorithms for
+    // individual moving.
+    dots = dots.filter( d => {
+      d.moveInplace(t/100);
+      return d.inside(500,500)
+    });
+    
+    // accelerate / decelerate according to the user interaction. {{{
+    var a = fromPressed(pressed);
+    if (a.x !== 0 && a.y !== 0) {
+      // in place .. wierd...
+      player.accelInplace(maxPlayerSpeed, sMul((t/100), a));
+      player.moveInplace(t/100);
+    }
+    else {
+      // no user interaction! Let's stop..
+      player.decelInplace(0.9);
+      player.moveInplace(t/100);
+    }
+    // }}}
+    replenishDots(100,dots);
+    handleCollision(player,dots);
+    requestAnimationFrame(t2 => {mainLoop(t1,t2);});
   }
+  // }}}
+  // now, run!
+  requestAnimationFrame(t => {mainLoop(0,t);});
 }
 
 window.addEventListener(
