@@ -82,6 +82,17 @@ class RGB {
   constructor (r:number, g:number, b:number){
     this.r = r; this.g=g; this.b=b;
   }
+  
+  withAlpha(a:number) : RGBA {
+    return (new RGBA (this.r, this.g, this.b, a));
+  }
+}
+
+class RGBA{
+  public r:number; g:number; b:number; a:number;
+  constructor (r:number, g:number, b:number, a:number){
+    this.r = r; this.g=g; this.b=b; this.a=a;
+  }
 }
 
 // }}}
@@ -90,11 +101,10 @@ class RGB {
 class Dot {
   public loc:Vector; // location
   public vel:Vector; // velocity
-  public col:RGB;    // colour used for this dot
+  public col:RGBA;    // colour used for this dot
   public dia:number; // diameter
-  private alpha:number = 0.5;
   
-  constructor (l:Vector, v:Vector, c:RGB, d:number){
+  constructor (l:Vector, v:Vector, c:RGBA, d:number){
     this.loc=l; this.vel=v; this.col=c; this.dia=d;
   }
 
@@ -106,7 +116,7 @@ class Dot {
       this.col.r.toString() + ", " +
       this.col.g.toString() + ", " +
       this.col.b.toString() + ", " +
-      this.alpha.toString() + ")";
+      this.col.a.toString() + ")";
     ctx.arc(this.loc.x, this.loc.y, this.dia, 0, 2*Math.PI);
     ctx.fill();
   }
@@ -170,7 +180,7 @@ function spawn (c: SpawnConfig) : Dot{
   var loc = new Vector(randomR(0,c.w), randomR(0,c.h));
   // FIXME : hard coded variance
   var vel = new Vector(randomR(-2,2), 5+randomR(-2,2));
-  var colour = (new HSV(randomR(0,360), 0.8, 1.0)).toRGB();
+  var colour = (new HSV(randomR(0,360), 0.8, 1.0)).toRGB().withAlpha(0.5);
   // FIXME : hard coded size
   var dia = randomR(3,15)
   return (new Dot (loc,vel,colour,dia));
