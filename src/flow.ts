@@ -151,7 +151,7 @@ class Dot {
 
 // is two dots colliding?
 function collides (d0: Dot, d1:Dot) : boolean {
-  return (Math.pow((d0.dia + d1.dia),2) <= distSq(d0.loc, d1.loc));
+  return (Math.pow((d0.dia + d1.dia),2) >= distSq(d0.loc, d1.loc));
 }
 
 // }}}
@@ -330,4 +330,4 @@ function main() : void {
 
 window.addEventListener(
   'load', main
-)
+);
