@@ -233,14 +233,11 @@ function fromPressed(pressed: boolean[]) : Vector {
 // }}}
 
 function main() : void {
-  console.log('hi');
-  var n : Vector = new Vector(4,5);
-  console.log(n);
-  console.log(vAdd(n,n));
-  console.log(sMul(4.2,n));
   var c = <HTMLCanvasElement>document.getElementById('world');
-  var p : Dot = new Dot (new Vector(50,50), new Vector(0,0), new RGB(230,34,230),40);
-  p.drawOn(c);
+  var dots = spawnN(initSpawnConfig, 50);
+  for (var i=0; i<dots.length; i++){
+    dots[i].drawOn(c);
+  }
 }
 
 window.addEventListener(
