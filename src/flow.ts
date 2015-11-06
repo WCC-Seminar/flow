@@ -47,10 +47,10 @@ class HSV {
     var san = function (x:number, y:number, z:number):RGB {
       return new RGB(Math.floor(x*255), Math.floor(y*255), Math.floor(z*255))
     }
-    if (this.s == 0) {
+    if (this.s === 0) {
       return san(this.v, this.v, this.v);
     }
-    else if (this.v == 0){
+    else if (this.v === 0){
       return san(0,0,0);
     }
     else {
@@ -58,7 +58,7 @@ class HSV {
       var hi = Math.floor(this.h/60);
       var f = this.h/60 - hi;
       var m = this.v*(1-this.s);
-      var x =  (hi % 2 == 0) ? this.v * (1- (1-f)*this.s): this.v * (1- f*this.s);
+      var x =  (hi % 2 === 0) ? this.v * (1- (1-f)*this.s): this.v * (1- f*this.s);
       switch(hi){
         case (0):
           return san(v,x,m);
