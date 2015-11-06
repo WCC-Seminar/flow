@@ -139,6 +139,30 @@ function collides (d0: Dot, d1:Dot) : boolean {
 
 // }}}
 
+// spawn.hs {{{
+class SpawnConfig {
+  public w : number; // width
+  public h : number; // height
+  constructor (w:number, h:number) {
+    this.w = w; this.h = h;
+  }
+}
+
+var initSpawnConfig = new SpawnConfig(500,250);
+var updateSpawnConfig = new SpawnConfig(500,10);
+
+// Num -> Num -> IO Num
+function randomR(lowerBound : number, upperBound : number) : number{
+  return (Math.random()*(upperBound-lowerBound) + lowerBound);
+}
+
+spawn (c: SpawnConfig) : Dot{
+  return new Dot (
+      )
+}
+
+// }}}
+
 function main() : void {
   console.log('hi');
   var n : Vector = new Vector(4,5);
