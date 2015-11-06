@@ -7,10 +7,12 @@ class Vector {
   }
 }
 
+// Vector plus Vector
 function vAdd(v0:Vector, v1:Vector) : Vector {
   return (new Vector(v0.x + v1.x, v0.y + v1.y));
 }
 
+// scalar times Vector
 function sMul(a:number, v:Vector) : Vector {
   return (new Vector(a*v.x, a*v.y));
 }
@@ -86,10 +88,10 @@ class RGB {
 
 // base.hs {{{
 class Dot {
-  public loc:Vector;
-  public vel:Vector;
-  public col:RGB;
-  public dia:number;
+  public loc:Vector; // location
+  public vel:Vector; // velocity
+  public col:RGB;    // colour used for this dot
+  public dia:number; // diameter
   private alpha:number = 0.5;
   
   constructor (l:Vector, v:Vector, c:RGB, d:number){
@@ -110,22 +112,26 @@ class Dot {
   
   public move(t:number) : Dot {
     var newLoc = vAdd(this.loc, sMul(t,this.vel));
-    // TODO
     return new Dot (newLoc, this.vel, this.col, this.dia);
   }
   
+  // move (by v*t), in place.
   public moveInplace(t:number) : void {
     this.loc = vAdd(this.loc, sMul(t,this.vel));
   }
   
+  // accelerate in place by dv, resulting in speed not exceeding maxSpeed.
   public accelInplace(maxSpeed:number, dv: Vector) : void {
     this.vel = fitIn(maxSpeed, vAdd(dv, this.vel));
   }
   
+  // decelerate. Mainly for decelerating smoothly when the player presses
+  // no buttons.
   public decelInplace(ratio: number): void {
     this.vel = sMul(ratio, this.vel);
   }
 
+  // is this dot inside the rectangular (width*height)?
   public inside(w:number, h:number) : boolean {
     var x = this.loc.x; var y = this.loc.y;
     return (0 <= x && x <= w && 0 <= y && y <= h);
@@ -148,14 +154,17 @@ class SpawnConfig {
   }
 }
 
+// used for initialising
 var initSpawnConfig = new SpawnConfig(500,250);
+// used for supplementation for lost dots
 var updateSpawnConfig = new SpawnConfig(500,10);
 
-// Num -> Num -> IO Num
+// helper. Num -> Num -> IO Num
 function randomR(lowerBound : number, upperBound : number) : number{
   return (Math.random()*(upperBound-lowerBound) + lowerBound);
 }
 
+// spawn one dot
 function spawn (c: SpawnConfig) : Dot{
   var loc = new Vector(randomR(0,c.w), randomR(0,c.h));
   // FIXME : hard coded variance
@@ -166,6 +175,7 @@ function spawn (c: SpawnConfig) : Dot{
   return (new Dot (loc,vel,colour,dia));
 }
 
+// spawn n dots
 function spawnN (c: SpawnConfig, n: number) : Dot[] {
   // map skips (and preserves) undefined!?
   var dots = new Array(n);
