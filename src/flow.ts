@@ -156,9 +156,23 @@ function randomR(lowerBound : number, upperBound : number) : number{
   return (Math.random()*(upperBound-lowerBound) + lowerBound);
 }
 
-spawn (c: SpawnConfig) : Dot{
-  return new Dot (
-      )
+function spawn (c: SpawnConfig) : Dot{
+  var loc = new Vector(randomR(0,c.w), randomR(0,c.h));
+  // FIXME : hard coded variance
+  var vel = new Vector(randomR(-2,2), 5+randomR(-2,2));
+  var colour = (new HSV(randomR(0,360), 0.8, 1.0)).toRGB();
+  // FIXME : hard coded size
+  var dia = randomR(3,15)
+  return (new Dot (loc,vel,colour,dia));
+}
+
+function spawnN (c: SpawnConfig, n: number) : Dot[] {
+  // map skips (and preserves) undefined!?
+  var dots = new Array(n);
+  for (var i=0; i<n; i++){
+    dots[i] = spawn(c);
+  }
+  return dots;
 }
 
 // }}}
