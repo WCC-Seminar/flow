@@ -1,2 +1,10 @@
-./build/flow.js : ./src/flow.ts
-	tsc ./src/flow.ts --outfile ./build/flow.js
+#Makefile
+SRC:=$(wildcard src/*.ts)
+BLD:=$(patsubst src/%.ts,build/%.js,$(SRC))
+CC:=tsc
+
+all:$(BLD)
+
+build/%.js: src/%.ts
+	$(CC) $< --outfile $@
+
