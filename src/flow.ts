@@ -19,19 +19,22 @@ var maxPlayerSpeed : number = 30;
 function handleCollision(pl : Dot, dots: Dot[]) : void{
   // if any of the dot collides ..
   for (var i=0; i<dots.length; i++){
-    if (collides(pl, dots[i])) {
-      pl.col = hitColor;
-      return;
-    }
+    if(dots[i].near(pl.loc)){
+      if (collides(pl, dots[i])) {
+        pl.col = hitColor;
+        return;
+      }}
   }
   pl.col = normalColor;
 }
 
+// FRAMERATE SENSITIVE!!
 // add another dot if there are less than required.
 // (I took add-one-dot-at-a-time strategy here to avoid many dots rushing in.)
 function replenishDots(n:number, ds:Dot[]) : void {
   if (ds.length < n) {
     ds.push(spawn(updateSpawnConfig));
+    //return replenishDots(n,ds); //for tests
   }
 }
 // }}}

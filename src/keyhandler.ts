@@ -16,20 +16,20 @@ function addKeyHandler(pressed: boolean[]) : void{
 // Probably it's better if we just use Array or Obj.
 function keyConfig(keyCode:number) : Vector {
   switch(keyCode){
-    case 65: // a
-    case 37: // Left
-      return (new Vector(-baseAccel,0)); // left
-    case 87: // w
-    case 38: // Up
-      return (new Vector(0, -baseAccel)); // up
-    case 68: // d
-    case 39: // Right
-      return (new Vector(baseAccel,0)); // right
-    case 83:
-    case 40:
-      return (new Vector(0,baseAccel)); // down
-    default:
-      return (new Vector(0,0));
+  case 65: // a
+  case 37: // Left
+    return (new Vector(-baseAccel,0)); // left
+  case 87: // w
+  case 38: // Up
+    return (new Vector(0, -baseAccel)); // up
+  case 68: // d
+  case 39: // Right
+    return (new Vector(baseAccel,0)); // right
+  case 83:
+  case 40:
+    return (new Vector(0,baseAccel)); // down
+  default:
+    return (new Vector(0,0));
   }
 }
 
@@ -39,7 +39,7 @@ function fromPressed(pressed: boolean[]) : Vector {
     pressed
       .map((pr,i) => { return (pr ? (keyConfig(i)): new Vector(0,0)); })
       .reduce(((acc, v) => {return vAdd(acc,v)}), new Vector(0,0))
-      );
+  );
 }
 
 // }}}

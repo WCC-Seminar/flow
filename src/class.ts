@@ -45,13 +45,17 @@ class Dot {
   }
 
   // is this dot inside the rectangular (width*height)?
-  public inside(w:number, h:number) : boolean {
+  public inside(left:number,upper:number,right:number,lower:number) : boolean {
     var x = this.loc.x; var y = this.loc.y;
-    return (0 <= x && x <= w && 0 <= y && y <= h);
+    return (left <= x && x <= right && upper <= y && y <= lower);
+  }
+  public near(point:Vector,dist:number=game.consts.distSmall){
+    return this.inside(point.x-dist,point.y-dist,point.x+dist,point.y+dist);
   }
 }
 
 // is two dots colliding?
+//only works on SLOW dots!!!
 function collides (d0: Dot, d1:Dot) : boolean {
   return (Math.pow((d0.dia + d1.dia),2) >= distSq(d0.loc, d1.loc));
 }
@@ -83,18 +87,18 @@ class HSV {
       var m = this.v*(1-this.s);
       var x =  (hi % 2 === 0) ? this.v * (1- (1-f)*this.s): this.v * (1- f*this.s);
       switch(hi){
-        case (0):
-          return san(v,x,m);
-        case (1):
-            return san(x,v,m);
-        case (2):
-            return san (m,v,x);
-        case (3):
-            return san(m,x,v);
-        case (4):
-            return san(x,m,v);
-        default:
-            return san(v,m,x);
+      case (0):
+        return san(v,x,m);
+      case (1):
+        return san(x,v,m);
+      case (2):
+        return san (m,v,x);
+      case (3):
+        return san(m,x,v);
+      case (4):
+        return san(x,m,v);
+      default:
+        return san(v,m,x);
       }
     }
   }
