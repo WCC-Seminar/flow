@@ -1,18 +1,7 @@
 /// <reference path="ref.ts" />
 // flow.hs {{{
-function clearCanv(c : HTMLCanvasElement) : void {
-  c.getContext('2d').clearRect(0,0, c.width, c.height);
-}
-
 var normalColor : RGBA = new RGBA (0, 250, 100, 0.7);
 var hitColor : RGBA = new RGBA(230,150,100,0.7);
-
-var player : Dot = new Dot (
-  new Vector(250, 450),
-  new Vector (0,0),
-  normalColor,
-  5
-);
 
 var maxPlayerSpeed : number = 30;
 
@@ -28,13 +17,24 @@ function handleCollision(pl : Dot, dots: Dot[]) : void{
   pl.col = normalColor;
 }
 
-// FRAMERATE SENSITIVE!!
+
 // add another dot if there are less than required.
 // (I took add-one-dot-at-a-time strategy here to avoid many dots rushing in.)
+/*
 function replenishDots(n:number, ds:Dot[]) : void {
   if (ds.length < n) {
     ds.push(spawn(updateSpawnConfig));
     //return replenishDots(n,ds); //for tests
   }
 }
+//*/
+function replenishDotsTest(n:number, ds:Dot[]) : void {
+  var cnt=0;
+  while (ds.length < n) {
+    if(game.vars.t<50*cnt/3){return;}
+    cnt=cnt+1;
+    ds.push(spawn(updateSpawnConfig));
+  }
+}
+var replenishDots=replenishDotsTest;
 // }}}

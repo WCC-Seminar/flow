@@ -8,8 +8,6 @@ function firstInit():void{
   gameMain=gameInit;
 }
 
-
-
 function main() : void {
   // prepare {{{
   firstInit();
@@ -26,11 +24,6 @@ function main() : void {
   requestAnimationFrame(t => {mainLoop(0,t);});
 }
 
-
-//*
 window.addEventListener(
   'load', main
 );
-//*/
-
-//window.onload=main;

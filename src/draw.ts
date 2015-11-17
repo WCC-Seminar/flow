@@ -6,8 +6,9 @@ var drawMain=drawDefault;
 
 
 
-
-
+function clearCanv(c : HTMLCanvasElement) : void {
+  c.getContext('2d').clearRect(0,0, c.width, c.height);
+}
 
 function drawInit(){
   game.canvas= <HTMLCanvasElement>document.getElementById('world');
@@ -55,7 +56,18 @@ module draw{
 
 
 function drawDefault(c:HTMLCanvasElement){
-  player.drawOn(c);
+  drawAll(game.vars.drawList,c);
+  /*
+  game.data.obj.player.drawOn(c);
   // draw each dot (forEach?)
-  game.data.dots.map( d => {d.drawOn(c);})
+  game.data.obj.dots.map( d => {d.drawOn(c);})
+//*/
+}
+
+function drawAll(obj:any,c:HTMLCanvasElement){
+    if(obj instanceof Array){
+      obj.map(d => {drawAll(d,c);})
+    }else if(typeof obj.drawOn==='function'){
+        obj.drawOn(c);
+    }
 }

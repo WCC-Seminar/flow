@@ -5,7 +5,13 @@ module game {
   export var canvasArr:HTMLCanvasElement[]=[];
   export var log;
   export module data{
-    export var dots:Dot[];
+    export module obj{
+      export var dots:Dot[]=[];
+      export var player:Dot;
+    }
+    export module stage{
+      export var playerInitPos:Vector;
+    }
   };
   export module settings{
     export var isBuffer;
@@ -17,5 +23,6 @@ module game {
   export module vars {
     export var t:number;
     export var fps=60;
+    export var drawList=[];
   }
 }
