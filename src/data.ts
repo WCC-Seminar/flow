@@ -21,7 +21,8 @@ module game {
     export var pressed=[];
   }
   export module vars {
-    export var t:number;
+    //export var t:number=0;
+    export var fps2=60;
     export var fps=60;
     export var drawList=[];
   }

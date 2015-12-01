@@ -24,7 +24,7 @@ function gameStartDefault(){
 }
 
 function gameBodyDefault(){  
-  var t=game.vars.t;
+  var t=1000/60;//game.vars.t;
   var player=game.data.obj.player;
   // remove dots that are outside of canvas.
   // need to rethink here if we implement more complex algorithms for
@@ -65,6 +65,5 @@ function gameBodyDefault(){
   // }}}
   replenishDots(maxDots,game.data.obj.dots);
   handleCollision(player,game.data.obj.dots);
-  draw();
-  game.log.innerHTML=" FPS: "+(game.vars.fps=50/t+19*game.vars.fps/20);
+  game.log.innerHTML=" FPS: "+Math.floor(game.vars.fps)+"/"+Math.floor(game.vars.fps2);
 }

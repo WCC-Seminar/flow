@@ -26,24 +26,26 @@ function drawInit(){
 }
 
 function draw(){
-  if(game.settings.isDoubleBuffer===true){
-    //double buffering
-    if (typeof draw.buffer === 'undefined') {
-      draw.buffer = false;
+  if(game.settings.isBuffer===true){
+    if(game.settings.isDoubleBuffer===true){
+      //double buffering
+      if (typeof draw.buffer === 'undefined') {
+        draw.buffer = false;
+      }
+      clearCanv(game.canvasArr[Number(draw.buffer)])
+      drawMain(game.canvasArr[Number(draw.buffer)]);
+      game.canvasArr[Number(!draw.buffer)].hidden=true;
+      game.canvasArr[Number(draw.buffer)].hidden=false;
+      draw.buffer=!draw.buffer;
+      
+    }else {
+      //draw after drawing on buffer
+      clearCanv(game.canvasArr[1])
+      drawMain(game.canvasArr[1]);
+      clearCanv(game.canvas);
+      game.canvas.getContext('2d').drawImage(game.canvasArr[1],0,0);
+      
     }
-    clearCanv(game.canvasArr[Number(draw.buffer)])
-    drawMain(game.canvasArr[Number(draw.buffer)]);
-    game.canvasArr[Number(!draw.buffer)].hidden=true;
-    game.canvasArr[Number(draw.buffer)].hidden=false;
-    draw.buffer=!draw.buffer;
-    
-  }else  if(game.settings.isBuffer===true){
-    //draw after drawing on buffer
-    clearCanv(game.canvasArr[1])
-    drawMain(game.canvasArr[1]);
-    clearCanv(game.canvas);
-    game.canvas.getContext('2d').drawImage(game.canvasArr[1],0,0);
-    
   }else{
     //normal
     clearCanv(game.canvas);
@@ -58,16 +60,16 @@ module draw{
 function drawDefault(c:HTMLCanvasElement){
   drawAll(game.vars.drawList,c);
   /*
-  game.data.obj.player.drawOn(c);
-  // draw each dot (forEach?)
-  game.data.obj.dots.map( d => {d.drawOn(c);})
-//*/
+    game.data.obj.player.drawOn(c);
+    // draw each dot (forEach?)
+    game.data.obj.dots.map( d => {d.drawOn(c);})
+  //*/
 }
 
 function drawAll(obj:any,c:HTMLCanvasElement){
-    if(obj instanceof Array){
-      obj.map(d => {drawAll(d,c);})
-    }else if(typeof obj.drawOn==='function'){
-        obj.drawOn(c);
-    }
+  if(obj instanceof Array){
+    obj.map(d => {drawAll(d,c);})
+  }else if(typeof obj.drawOn==='function'){
+    obj.drawOn(c);
+  }
 }

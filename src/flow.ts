@@ -20,7 +20,7 @@ function handleCollision(pl : Dot, dots: Dot[]) : void{
 
 // add another dot if there are less than required.
 // (I took add-one-dot-at-a-time strategy here to avoid many dots rushing in.)
-/*
+//*
 function replenishDots(n:number, ds:Dot[]) : void {
   if (ds.length < n) {
     ds.push(spawn(updateSpawnConfig));
@@ -28,13 +28,4 @@ function replenishDots(n:number, ds:Dot[]) : void {
   }
 }
 //*/
-function replenishDotsTest(n:number, ds:Dot[]) : void {
-  var cnt=0;
-  while (ds.length < n) {
-    if(game.vars.t<50*cnt/3){return;}
-    cnt=cnt+1;
-    ds.push(spawn(updateSpawnConfig));
-  }
-}
-var replenishDots=replenishDotsTest;
 // }}}
