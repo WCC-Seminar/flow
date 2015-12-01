@@ -1,45 +1,37 @@
 /// <reference path="ref.ts" />
+
+
+function firstInit():void{
+  drawInit();
+  game.log = document.getElementById('log');
+  addKeyHandler(game.control.pressed);
+  gameMain=gameInit;
+}
+
 function main() : void {
   // prepare {{{
-  // the canvas we're using
-  var c = <HTMLCanvasElement>document.getElementById('world');
-  var dots = spawnN(initSpawnConfig, 50);
-  var pressed = [];
-  addKeyHandler(pressed);
+  firstInit();
   // }}}
   // mainLoop {{{
+  var lastDraw=0;
+  var lastStep=0;
+  var cnt=0;
   function mainLoop(t0, t1){
     // time from last step
-    var t = t1-t0;
-    clearCanv(c);
-    player.drawOn(c);
-    
-    // draw each dot (forEach?)
-    dots.map( d => {d.drawOn(c);})
-    
-    // remove dots that are outside of canvas.
-    // need to rethink here if we implement more complex algorithms for
-    // individual moving.
-    dots = dots.filter( d => {
-      d.moveInplace(t/100);
-      return d.inside(500,500)
-    });
-    
-    // accelerate / decelerate according to the user interaction. {{{
-    var a = fromPressed(pressed);
-    if (a.x !== 0 || a.y !== 0) {
-      // in place .. wierd...
-      player.accelInplace(maxPlayerSpeed, sMul((t/100), a));
-      player.moveInplace(t/100);
-    }
-    else {
-      // no user interaction! Let's stop..
-      player.decelInplace(0.9);
-      player.moveInplace(t/100);
-    }
-    // }}}
-    replenishDots(100,dots);
-    handleCollision(player,dots);
+    //game.vars.t = t1-t0;
+    var t=t1-t0;
+    lastDraw+=t;//game.vars.t;
+    lastStep+=t;//game.vars.t;
+    while(lastStep>0){
+      gameMain();
+      lastStep-=1000/60;
+      game.vars.fps2=(++cnt)*1000/t1;
+    };
+    //if(t<1100/60 || lastDraw>100){//Need to change here!!!
+    draw();
+    game.vars.fps=50/lastDraw+19*game.vars.fps/20;
+    lastDraw=0;
+    //}
     requestAnimationFrame(t2 => {mainLoop(t1,t2);});
   }
   // }}}
