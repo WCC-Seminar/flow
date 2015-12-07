@@ -1,5 +1,5 @@
 /// <reference path="ref.ts" />
-var initDots=200;
-var maxDots=10000;
+var initDots=20;
+var maxDots=100;
 game.settings.isBuffer=false;
 game.settings.isDoubleBuffer=false; //only active when (isBuffer===true)

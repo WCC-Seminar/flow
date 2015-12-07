@@ -3,6 +3,7 @@
 /// <reference path="data.ts" />
 /// <reference path="config.ts" />
 /// <reference path="keyhandler.ts" />
+/// <reference path="control.ts" />
 /// <reference path="spawn.ts" />
 /// <reference path="flow.ts" />
 /// <reference path="draw.ts" />

@@ -18,9 +18,29 @@ function gameStartDefault(){
   game.vars.drawList=[];
   game.vars.drawList.push(game.data.obj.player);
   game.vars.drawList.push(game.data.obj.dots);
+
+
+  //test message
+  //*
+  gameWindow.appendChild(
+    createSelectorBox(
+      "test message, press 'Z' key to close this window",
+      new Vector(250,250),new Vector(400,250),
+      [["OK",(function(){gameMain=gameBodyDefault;})]]
+    ));//*/
+  /*
+  gameWindow.appendChild(
+    createMessageBox(
+      "test message, press 'Z' key to close this window",
+      new Vector(250,250),new Vector(400,250),
+      "OK",(function(){gameMain=gameBodyDefault;})
+    ));//*/
   
-  
-  gameMain=gameBodyDefault;
+  gameMain=gameBodyDefault0;
+}
+
+function gameBodyDefault0(){
+  fromPressed(game.control.pressed);
 }
 
 function gameBodyDefault(){  
@@ -49,7 +69,7 @@ function gameBodyDefault(){
       game.consts.canvasHeight + game.consts.canvasMargin
     )){ delete game.data.obj.dots[i];game.data.obj.dots.splice(i,1);}
   }
-  
+
   // accelerate / decelerate according to the user interaction. {{{
   var a = fromPressed(game.control.pressed);
   if (a.x !== 0 || a.y !== 0) {
@@ -65,5 +85,4 @@ function gameBodyDefault(){
   // }}}
   replenishDots(maxDots,game.data.obj.dots);
   handleCollision(player,game.data.obj.dots);
-  game.log.innerHTML=" FPS: "+Math.floor(game.vars.fps)+"/"+Math.floor(game.vars.fps2);
 }

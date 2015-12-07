@@ -28,6 +28,10 @@ function keyConfig(keyCode:number) : Vector {
   case 83:
   case 40:
     return (new Vector(0,baseAccel)); // down
+  case 90://Z for test
+    gameWindow.focus().next();
+    return (new Vector(0,0));
+    
   default:
     return (new Vector(0,0));
   }

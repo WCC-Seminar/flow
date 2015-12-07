@@ -59,6 +59,7 @@ module draw{
 
 function drawDefault(c:HTMLCanvasElement){
   drawAll(game.vars.drawList,c);
+  gameWindow.drawOn(c);
   /*
     game.data.obj.player.drawOn(c);
     // draw each dot (forEach?)

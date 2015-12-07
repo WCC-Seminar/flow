@@ -27,6 +27,7 @@ function main() : void {
       lastStep-=1000/60;
       game.vars.fps2=(++cnt)*1000/t1;
     };
+    game.log.innerHTML=" FPS: "+Math.floor(game.vars.fps)+"/"+Math.floor(game.vars.fps2);
     //if(t<1100/60 || lastDraw>100){//Need to change here!!!
     draw();
     game.vars.fps=50/lastDraw+19*game.vars.fps/20;

@@ -1,6 +1,13 @@
 /// <reference path="ref.ts" />
 // base.hs {{{
-class Dot {
+
+interface Obj {
+  ///!
+  loc:Vector;
+  drawOn(c:HTMLCanvasElement):void;
+}
+
+class Dot implements Obj {
   public loc:Vector; // location
   public vel:Vector; // velocity
   public col:RGBA;    // colour used for this dot
