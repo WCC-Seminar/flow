@@ -30,6 +30,7 @@ class ObjNode {
       this.parent.focusNum=this.parent.children.indexOf(this);
       this.parent.getFocus();
     }
+    return this;
   }
   
   public drawOn(c){
@@ -91,6 +92,7 @@ class ObjNodeSelectorV extends ObjNodeSelector{
       this.children[i].obj.loc.y=this.obj.loc.y
         +((2*i+1)/this.children.length-1)*w;
     }
+    return this;
   }
   public appendChild(newChild:ObjNodeSuperWindow){
     super.appendChild(newChild);
@@ -114,6 +116,7 @@ class ObjNodeSelectorH extends ObjNodeSelector{
       this.children[i].obj.loc.x=this.obj.loc.x
         +((2*i+1)/this.children.length-1)*this.obj.size.x/2;
     }
+    return this;
   }
   public appendChild(newChild:ObjNodeSuperWindow){
     super.appendChild(newChild);
