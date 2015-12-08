@@ -27,14 +27,14 @@ function gameStartDefault(){
       "test message, press 'Z' key to close this window",
       new Vector(250,250),new Vector(400,250),
       [["OK",(function(){gameMain=gameBodyDefault;})]]
-    ).getFocus());//*/
+    ).getFocused());//*/
   /*
   gameWindow.appendChild(
     createMessageBox(
       "test message, press 'Z' key to close this window",
       new Vector(250,250),new Vector(400,250),
       "OK",(function(){gameMain=gameBodyDefault;})
-    ));//*/
+    ).getFoucused());//*/
   
   gameMain=gameBodyDefault0;
 }

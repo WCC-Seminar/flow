@@ -26,8 +26,8 @@ class ObjNode {
   public focus():ObjNode{
     return (this.children[this.focusNum])?(this.children[this.focusNum]).focus():this;
   }
-  public getFocus(){
-    (this.parent)&&(this.parent.focusNum=this.parent.children.indexOf(this))&&(this.parent.getFocus());    
+  public getFocused(){
+    (this.parent)&&(this.parent.focusNum=this.parent.children.indexOf(this))&&(this.parent.getFocused());    
     return this;
   }
   
