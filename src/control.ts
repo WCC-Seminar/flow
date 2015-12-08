@@ -57,12 +57,14 @@ function createSelectorBox(
           text)));
   var boxlocy=loc.y+size.y*1/4;
 
-  return newCreatedWindow.appendChild(
+  var b= newCreatedWindow.appendChild(
     new ObjNodeSelectorH(
       new ObjBox(
         new Vector(loc.x,boxlocy),
         new Vector(size.x*0.9,size.y/3)
-      ),
+      ),[])
+      );
+b.children=
       buttons.map( btn => {
         return new ObjNodeSelectorButton(
           new ObjBox(
@@ -72,10 +74,10 @@ function createSelectorBox(
             btn[0]
           ),
           newCreatedWindow,
-          btn[1]
-        );
-      }))
-  );
+          btn[1],
+          b
+        )});
+        return b;
 }
 
 var gameWindow=new ObjNode(undefined,undefined,false);
